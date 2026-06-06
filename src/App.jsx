@@ -15,7 +15,7 @@ import githubIcon from './images/gitt.png';
 import stop from './song/Drake - 9.mp3';
 import view from './images/viewW.svg';
 import cover from './images/Views - Drake.jpg';
-import bgVideo from './videos/cars.mp4';
+import bgVideo from './videos/care.mp4';
 import starImg from './videos/star.png';
 
 function App() {
@@ -69,7 +69,8 @@ function App() {
   });
 
   // Discord User Configuration ID Node
-  const DISCORD_USER_ID = '1491137614525370589'; 
+  const DISCORD_USER_ID = '1491137614525370589';
+   
 
   // Lanyard WebSocket Integration Pipe
   useEffect(() => {
@@ -286,7 +287,6 @@ function App() {
           <div className="presence-status-sub-card">
             <div className="mini-avatar-status-wrapper">
               <img src={presence.avatarUrl} className="mini-status-avatar-circle" alt="Discord Avatar" />
-              <div className={`presence-indicator-glow-dot ${presence.isStreaming ? 'status-streaming' : `status-${presence.status}`}`} />
             </div>
             <div className="presence-details-text-fields">
               <div className="presence-headline-row">
