@@ -17,7 +17,7 @@ import githubIcon from './images/gitt.png';
 import stop from './song/stopplayin.mp3';
 import view from './images/viewW.svg';
 import cover from './images/cover.png';
-import bgVideo from './videos/sword.mp4';
+import bgVideo from './videos/cars.mp4';
 import starImg from './videos/star.png';
 
 function App() {
