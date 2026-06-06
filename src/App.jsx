@@ -3,20 +3,18 @@ import './App.css';
 import { InteractiveCard } from './InteractiveCard';
 import { CursorTrail } from './CursorTrail';
 
-// Core Assets Mapping & Filename Synchronizers
-import mainPfp from './images/download (2).gif';      // Main profile avatar
-import cursorAsset from './images/Frame_94.png';       // Trail dot source asset
 
-// Social Matrix Media Navigation Nodes
+import mainPfp from './images/download (2).gif';      
+import cursorAsset from './images/Frame_94.png';      
+
 import instaIcon from './images/09066md.png';          
 import robloxIcon from './images/505sxtx.png';         
 import discordIcon from './images/0b09x3z.png';        
 import githubIcon from './images/gitt.png';         
 
-// Media Tracker Elements
-import stop from './song/stopplayin.mp3';
+import stop from './song/Drake - 9.mp3';
 import view from './images/viewW.svg';
-import cover from './images/cover.png';
+import cover from './images/Views - Drake.jpg';
 import bgVideo from './videos/cars.mp4';
 import starImg from './videos/star.png';
 
@@ -29,12 +27,12 @@ function App() {
   const [isOverlayClicked, setIsOverlayClicked] = useState(false);
   const [entered, setEntered] = useState(false);
 
-  // Typewriter Effect State
+ 
   const bioText = 'I trust no one, not even myself';
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
-  // Typewriter Effect Driver
+
   useEffect(() => {
     if (!entered) return;
     let i = 0;
@@ -318,8 +316,8 @@ function App() {
             <img src={cover} className='player-track-artwork-img' alt='Cover' />
           </a>
           <div className='player-track-text-group'>
-            <span className='player-track-headline'>Wokeup</span>
-            <span className='player-track-sub-artist'>by Kankan</span>
+            <span className='player-track-headline'>9</span>
+            <span className='player-track-sub-artist'>by Drake</span>
           </div>
           <div className='player-timer-counter-code'>
             {formatTime(currentTime)} / {formatTime(maxTime)}
