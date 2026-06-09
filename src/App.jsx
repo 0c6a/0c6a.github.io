@@ -339,6 +339,9 @@ function App() {
           <a href="https://dsc.gg/mnltsmp" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={discordIcon} alt="Discord" />
           </a>
+          <a href="https://discord.com/users/1491137614525370589" target="_blank" rel="noopener noreferrer" className="footer-node-item">
+            <img src={discordIcon} alt="Discord" />
+          </a>
           <a href="https://github.com/0c6a" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={githubIcon} alt="GitHub" />
           </a>
