@@ -6,10 +6,10 @@ const InteractiveCard = React.forwardRef(({ children, className, ...props }, ref
     <Tilt
       className={`interactive-3d-card ${className || ""}`}
       perspective={2500}
-      max={3}                // Max tilt angle match
-      speed={1000}             // Smooth transition damping
-      reverse={true}          // CRITICAL: Flips the tilt direction to track your cursor perfectly!
-      glareEnable={true}       // Clean specular glass reflection
+      max={1}                
+      speed={1000}            
+      reverse={true}          
+      glareEnable={true}       
       glareMaxOpacity={0.12}   
       glareColor="#ffffff"     
       glarePosition="all"

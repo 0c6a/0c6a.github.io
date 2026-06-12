@@ -8,15 +8,16 @@ import mainPfp from './images/download (2).gif';
 import cursorAsset from './images/Frame_94.png';      
 
 import instaIcon from './images/09066md.png';          
-import robloxIcon from './images/505sxtx.png';         
-import discordIcon from './images/0b09x3z.png';        
+import robloxIcon from './images/r.png';         
+import discordIcon from './images/ngh.png';        
 import githubIcon from './images/gitt.png';         
-
+import tiktokicon from './images/azeaz.png';
 import stop from './song/Drake - 9.mp3';
 import view from './images/viewW.svg';
 import cover from './images/Views - Drake.jpg';
 import bgVideo from './videos/care.mp4';
 import starImg from './videos/star.png';
+
 
 function App() {
   const [viewCount, setViewCount] = useState(3242);
@@ -195,7 +196,7 @@ function App() {
     };
   }, [DISCORD_USER_ID]);
 
-  // Glitch View Counter Effect
+  // View
   useEffect(() => {
     const interval = setInterval(() => {
       setViewCount(Math.floor(Math.random() * 99999));
@@ -267,7 +268,7 @@ function App() {
           <span>{viewCount}</span>
         </div>
 
-        {/* ROW 1: Hero Identity Profile Headers */}
+        {/* Identity Section */}
         <div className={`hero-identity-section-row anim-y-scale anim-d3 ${entered ? 'anim-active' : ''}`} style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
           <div className='avatar-neon-frame-box' style={{ transform: 'translateZ(60px)', transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
             <img src={starImg} className='avatar-star-ring' alt="" />
@@ -282,7 +283,7 @@ function App() {
           </div>
         </div>
 
-        {/* ROW 2: Presence + Activity side-by-side */}
+        {/*  Presence  */}
         <div className={`presence-and-activity-row anim-y-scale anim-d4 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <div className="presence-status-sub-card">
             <div className="mini-avatar-status-wrapper">
@@ -307,7 +308,7 @@ function App() {
           )}
         </div>
 
-        {/* ROW 3: Audio Media Player */}
+        {/* media */}
         <div className={`lol-integrated-media-player anim-y-scale anim-d5 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <div className='media-timeline-slider-track'>
             <div className='media-timeline-progress-fill' style={{ width: `${(currentTime / maxTime) * 100}%` }} />
@@ -325,7 +326,7 @@ function App() {
           <audio id='audio' src={stop} />
         </div>
 
-        {/* ROW 4: Low-Profile Footers */}
+        {/* links */}
         <div className={`lol-profile-footer-navigation-nodes anim-y-scale anim-d6 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <a href="https://instagram.com/m0icy.dll" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={instaIcon} alt="Instagram" />
