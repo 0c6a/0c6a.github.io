@@ -258,9 +258,6 @@ function App() {
         }}
       >
       <div className="profile-stack-wrapper">
-      <a href="https://aecer.mysellauth.com/" target="_blank" rel="noopener noreferrer" className={`store-btn-3d anim-y-scale anim-d0 ${entered ? 'anim-active' : ''}`}>
-        cheats
-      </a>
       <InteractiveCard className={`lol-profile-card ${entered ? 'entered' : ''}`}>
         
         <div className={`top-corner-traffic-badge anim-fade-in anim-d2 ${entered ? 'anim-active' : ''}`}>
