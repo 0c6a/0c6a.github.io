@@ -48,7 +48,6 @@ function App() {
     return () => clearInterval(typeInterval);
   }, [entered]);
 
-  // Cursor Blink
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setShowCursor(prev => !prev);
@@ -56,7 +55,6 @@ function App() {
     return () => clearInterval(blinkInterval);
   }, []);
 
-  // Lanyard Live Presence State Node
   const [presence, setPresence] = useState({
     username: '0c6a',
     status: 'Streaming',
@@ -69,17 +67,14 @@ function App() {
     isStreaming: false
   });
 
-  // Discord User Configuration ID Node
   const DISCORD_USER_ID = '1491137614525370589';
    
 
-  // Lanyard WebSocket Integration Pipe
   useEffect(() => {
     let ws;
     let heartbeatInterval;
 
     function connectWebSocket() {
-      // FIX: Changed from /socket to /v1 gateway endpoint
       ws = new WebSocket('wss://api.lanyard.rest/socket');
 
       ws.onopen = () => {
@@ -89,7 +84,6 @@ function App() {
       ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
 
-        // Opcode 1: Hello - Initialize Heartbeat and Subscribe
         if (message.op === 1) {
           heartbeatInterval = setInterval(() => {
             ws.send(JSON.stringify({ op: 3 }));
@@ -101,11 +95,9 @@ function App() {
           }));
         }
 
-        // Opcode 0: Dispatch updates (Event Initialization / Presence Mutation)
         if (message.op === 0 && (message.t === 'INIT_STATE' || message.t === 'PRESENCE_UPDATE')) {
           const data = message.t === 'INIT_STATE' ? message.d : message.d;
           
-          // Adjust parsing data structures depending on initialization event wrapping structures
           const targetData = message.t === 'INIT_STATE' ? data[DISCORD_USER_ID] : data;
           
           if (!targetData) return;
@@ -117,11 +109,9 @@ function App() {
             ? `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.${avatarHash.startsWith('a_') ? 'gif' : 'png'}?size=256`
             : mainPfp;
 
-          // Parse for custom text status
           const customActivity = targetData.activities.find(act => act.type === 4);
           let presenceSubtext = customActivity && customActivity.state ? customActivity.state : '';
 
-          // Look for rich presences (gaming/streaming) — exclude type 4 (custom status)
           const activeGame = targetData.activities.find(act => act.type !== 4);
           let activityIconUrl = '';
           let activityNameText = '';
@@ -134,12 +124,9 @@ function App() {
             activityStateText = activeGame.state || '';
             activityDetailsText = activeGame.details || '';
 
-            // Build activity icon URL from assets
             const largeImage = activeGame.assets && activeGame.assets.large_image;
             if (largeImage) {
               if (largeImage.startsWith('mp:external/')) {
-                // Discord mp:external proxy requires Referer header — extract the real URL instead
-                // Format: mp:external/{token}/{encoded_url} where :// becomes /
                 const urlPart = largeImage.split('/').slice(2).join('/');
                 const slashIndex = urlPart.indexOf('/');
                 if (slashIndex !== -1) {
@@ -149,11 +136,9 @@ function App() {
                   activityIconUrl = largeImage;
                 }
               } else if (largeImage.startsWith('spotify:')) {
-                // Spotify album art hash
                 const spotifyHash = largeImage.replace('spotify:', '');
                 activityIconUrl = `https://i.scdn.co/image/${spotifyHash}`;
               } else if (/^\d+$/.test(largeImage)) {
-                // Discord application asset ID
                 activityIconUrl = `https://cdn.discordapp.com/app-assets/${activeGame.application_id}/${largeImage}.png`;
               } else {
                 activityIconUrl = largeImage;
@@ -196,7 +181,6 @@ function App() {
     };
   }, [DISCORD_USER_ID]);
 
-  // View
   useEffect(() => {
     const interval = setInterval(() => {
       setViewCount(Math.floor(Math.random() * 99999));
@@ -204,7 +188,6 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Audio Driver Synchronization Pipeline
   useEffect(() => {
     const audioElement = document.getElementById('audio');
     if (!isPlaying && isOverlayClicked) {
@@ -265,7 +248,6 @@ function App() {
           <span>{viewCount}</span>
         </div>
 
-        {/* Identity Section */}
         <div className={`hero-identity-section-row anim-y-scale anim-d3 ${entered ? 'anim-active' : ''}`} style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
           <div className='avatar-neon-frame-box' style={{ transform: 'translateZ(60px)', transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
             <img src={starImg} className='avatar-star-ring' alt="" />
@@ -280,7 +262,6 @@ function App() {
           </div>
         </div>
 
-        {/*  Presence  */}
         <div className={`presence-and-activity-row anim-y-scale anim-d4 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <div className="presence-status-sub-card">
             <div className="mini-avatar-status-wrapper">
@@ -305,7 +286,6 @@ function App() {
           )}
         </div>
 
-        {/* media */}
         <div className={`lol-integrated-media-player anim-y-scale anim-d5 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <div className='media-timeline-slider-track'>
             <div className='media-timeline-progress-fill' style={{ width: `${(currentTime / maxTime) * 100}%` }} />
@@ -323,7 +303,6 @@ function App() {
           <audio id='audio' src={stop} />
         </div>
 
-        {/* links */}
         <div className={`lol-profile-footer-navigation-nodes anim-y-scale anim-d6 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
           <a href="https://instagram.com/m0icy.dll" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={instaIcon} alt="Instagram" />

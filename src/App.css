@@ -284,7 +284,6 @@ body {
   font-weight: 400;
 }
 
-/* PRESENCE + ACTIVITY SIDE BY SIDE ROW */
 .presence-and-activity-row {
   display: flex;
   gap: 8px;
@@ -365,7 +364,6 @@ body {
   text-overflow: ellipsis;
 }
 
-/* RPC ACTIVITY CARD */
 .rpc-activity-card {
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -432,7 +430,6 @@ body {
   box-shadow: 0 0 8px #593695;
 }*/
 
-/* INTEGRATED MEDIA TRACK PANEL CONTROLS ELEMENT (ROW 3) */
 .lol-integrated-media-player {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -496,7 +493,6 @@ body {
   font-family: monospace;
 }
 
-/* DYNAMIC FLOATING FOOTER MATRIX ROW (ROW 4) */
 .lol-profile-footer-navigation-nodes {
   display: flex;
   align-items: center;
@@ -528,7 +524,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* PROFILE STACK WRAPPER */
 .profile-stack-wrapper {
   display: flex;
   flex-direction: column;
