@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-const SEGMENT_COUNT = 12;
+const SEGMENT_COUNT = 1;
 const EASING = 0.45;
 
 const CursorTrail = ({ cursorImage }) => {
@@ -56,7 +56,7 @@ const CursorTrail = ({ cursorImage }) => {
     <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 1000000 }}>
       {Array.from({ length: SEGMENT_COUNT }, (_, i) => {
         const isHead = i === 0;
-        const size = 10;
+        const size = 50;
         const opacity = 1;
         return (
           <div
@@ -74,11 +74,11 @@ const CursorTrail = ({ cursorImage }) => {
               backgroundPosition: "center",
               background: isHead && cursorImage
                 ? `url(${cursorImage}) center/cover no-repeat`
-                : "radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 1) 0%, rgba(180, 140, 255, 1) 40%, rgba(120, 80, 220, 1) 100%)",
+                : "radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 1) 0%, rgba(180, 140, 255, 1) 0%, rgba(120, 80, 220, 1) 100%)",
               opacity: opacity,
               boxShadow: isHead
                 ? "none"
-                : "0 0 8px 2px rgba(200, 170, 255, 0.9), 0 0 16px 4px rgba(150, 100, 255, 0.6), 0 0 24px 6px rgba(100, 60, 200, 0.3)",
+                : "0 0 0px 0px rgba(200, 170, 255, 0.9), 0 0 0px 0px rgba(150, 100, 255, 0.6), 0 0 0px 0px rgba(100, 60, 200, 0.3)",
               transform: "translate3d(-100px, -100px, 0)",
               willChange: "transform",
             }}

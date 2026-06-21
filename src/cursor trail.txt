@@ -1,0 +1,17 @@
+<CursorTrail cursorImage={cursorAsset} />
+
+      {showOverlay && (
+        <div className='overlay' onClick={() => { setShowOverlay(false); setIsOverlayClicked(true); setEntered(true); }}>
+          <span className='click text-shadow-glow'>click :3</span>
+        </div>
+      )}
+
+      <div 
+        className="profile-3d-scene"
+        style={{ 
+          perspective: "1200px", 
+          WebkitPerspective: "1200px",
+          transformStyle: "preserve-3d",
+          WebkitTransformStyle: "preserve-3d"
+        }} 
+      >

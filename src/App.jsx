@@ -5,17 +5,17 @@ import { CursorTrail } from './CursorTrail';
 
 
 import mainPfp from './images/download (2).gif';      
-import cursorAsset from './images/Frame_94.png';      
+import cursorAsset from './images/cur.gif';      
 
 import instaIcon from './images/09066md.png';          
 import robloxIcon from './images/r.png';         
-import discordIcon from './images/ngh.png';        
+import discordIcon from './images/ngh.png';         
 import githubIcon from './images/gitt.png';         
 import tiktokicon from './images/azeaz.png';
 import stop from './song/Drake - 9.mp3';
 import view from './images/viewW.svg';
 import cover from './images/Views - Drake.jpg';
-import bgVideo from './videos/care.mp4';
+import bgVideo from './videos/isit.mp4';
 import starImg from './videos/star.png';
 
 
