@@ -1,0 +1,1 @@
+<img src={starImg} className='avatar-star-ring' alt="" />
