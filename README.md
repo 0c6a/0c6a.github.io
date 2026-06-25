@@ -32,9 +32,9 @@ npm run dev
 ## scripts
 -----------
 ```bash
-npm run dev      # start vite dev server
-npm run build    # build site + seo assets
-npm run preview  # preview production build
+npm run dev     
+npm run build   
+npm run preview  
 ```
 
 
