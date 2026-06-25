@@ -226,7 +226,25 @@ function App() {
       <CursorTrail cursorImage={cursorAsset} />
 
       {showOverlay && (
-        <div className='overlay' onClick={() => { setShowOverlay(false); setIsOverlayClicked(true); setEntered(true); }}>
+        <div
+          className='overlay'
+          onClick={async () => {
+            // ios needs perms to get deviceorientation
+            if (
+              typeof DeviceOrientationEvent !== 'undefined' &&
+              typeof DeviceOrientationEvent.requestPermission === 'function'
+            ) {
+              try {
+                await DeviceOrientationEvent.requestPermission();
+              } catch (err) {
+                console.log('Motion permission error:', err);
+              }
+            }
+            setShowOverlay(false);
+            setIsOverlayClicked(true);
+            setEntered(true);
+          }}
+        >
           <span className='click text-shadow-glow'>click :3</span>
         </div>
       )}
