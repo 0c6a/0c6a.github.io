@@ -27,6 +27,7 @@ function App() {
   const [showOverlay, setShowOverlay] = useState(true);
   const [isOverlayClicked, setIsOverlayClicked] = useState(false);
   const [entered, setEntered] = useState(false);
+  const [glitching, setGlitching] = useState(false);
 
  
   const bioText = 'I trust no one, not even myself';
@@ -56,137 +57,116 @@ function App() {
   }, []);
 
   const [presence, setPresence] = useState({
-    username: '0c6a',
-    status: 'Streaming',
-    customStatus: 'Streaming',
-    avatarUrl: mainPfp,
-    activityIcon: '',
-    activityName: '',
-    activityState: '',
-    activityDetails: '',
-    isStreaming: false
-  });
+  username: '0c6a',
+  status: 'Streaming',
+  customStatus: 'Streaming',
+  avatarUrl: mainPfp,
+  avatarDecoration: null,
+  badges: [],
+  accentColor: null,
+  bannerColor: null,
+  bio: '',
+  activityIcon: '',
+  activityName: '',
+  activityState: '',
+  activityDetails: '',
+  isStreaming: false
+});
 
   const DISCORD_USER_ID = '1491137614525370589';
    
 
   useEffect(() => {
-    let ws;
-    let heartbeatInterval;
+  async function fetchPresence() {
+    try {
+      const [presenceRes, profileRes] = await Promise.all([
+        fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`),
+        fetch(`https://dcdn.dstn.to/profile/${DISCORD_USER_ID}?t=${Date.now()}`)
+      ]);
+      const presenceJson = await presenceRes.json();
+      const profileJson = await profileRes.json();
+      const data = presenceJson.data;
+      const profile = profileJson.user;
+      if (!data || !profile) return;
 
-    function connectWebSocket() {
-      ws = new WebSocket('wss://api.lanyard.rest/socket');
+      const discordUser = data.discord_user;
+      const status = data.discord_status || 'offline';
+      const avatarHash = discordUser.avatar;
+      const avatarUrl = avatarHash
+        ? `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.${avatarHash.startsWith('a_') ? 'gif' : 'png'}?size=256`
+        : mainPfp;
 
-      ws.onopen = () => {
-        console.log('Lanyard connection initialized.');
-      };
+      const customActivity = data.activities.find(act => act.type === 4);
+      let presenceSubtext = customActivity && customActivity.state ? customActivity.state : '';
 
-      ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
+      const activeGame = data.activities.find(act => act.type !== 4);
+      let activityIconUrl = '';
+      let activityNameText = '';
+      let activityStateText = '';
+      let activityDetailsText = '';
 
-        if (message.op === 1) {
-          heartbeatInterval = setInterval(() => {
-            ws.send(JSON.stringify({ op: 3 }));
-          }, message.d.heartbeat_interval);
+      if (activeGame) {
+        presenceSubtext = activeGame.type === 1 ? `Streaming ${activeGame.name}` : `Playing ${activeGame.name}`;
+        activityNameText = activeGame.name || '';
+        activityStateText = activeGame.state || '';
+        activityDetailsText = activeGame.details || '';
 
-          ws.send(JSON.stringify({
-            op: 2,
-            d: { subscribe_to_ids: [DISCORD_USER_ID] }
-          }));
-        }
-
-        if (message.op === 0 && (message.t === 'INIT_STATE' || message.t === 'PRESENCE_UPDATE')) {
-          const data = message.t === 'INIT_STATE' ? message.d : message.d;
-          
-          const targetData = message.t === 'INIT_STATE' ? data[DISCORD_USER_ID] : data;
-          
-          if (!targetData) return;
-
-          const discordUser = targetData.discord_user;
-          const status = targetData.discord_status || 'offline';
-          const avatarHash = discordUser.avatar;
-          const avatarUrl = avatarHash 
-            ? `https://cdn.discordapp.com/avatars/${DISCORD_USER_ID}/${avatarHash}.${avatarHash.startsWith('a_') ? 'gif' : 'png'}?size=256`
-            : mainPfp;
-
-          const customActivity = targetData.activities.find(act => act.type === 4);
-          let presenceSubtext = customActivity && customActivity.state ? customActivity.state : '';
-
-          const activeGame = targetData.activities.find(act => act.type !== 4);
-          let activityIconUrl = '';
-          let activityNameText = '';
-          let activityStateText = '';
-          let activityDetailsText = '';
-
-          if (activeGame) {
-            presenceSubtext = activeGame.type === 1 ? `Streaming ${activeGame.name}` : `Playing ${activeGame.name}`;
-            activityNameText = activeGame.name || '';
-            activityStateText = activeGame.state || '';
-            activityDetailsText = activeGame.details || '';
-
-            const largeImage = activeGame.assets && activeGame.assets.large_image;
-            if (largeImage) {
-              if (largeImage.startsWith('mp:external/')) {
-                const urlPart = largeImage.split('/').slice(2).join('/');
-                const slashIndex = urlPart.indexOf('/');
-                if (slashIndex !== -1) {
-                  const maybeEncoded = urlPart.slice(slashIndex + 1);
-                  activityIconUrl = 'https://' + maybeEncoded;
-                } else {
-                  activityIconUrl = largeImage;
-                }
-              } else if (largeImage.startsWith('spotify:')) {
-                const spotifyHash = largeImage.replace('spotify:', '');
-                activityIconUrl = `https://i.scdn.co/image/${spotifyHash}`;
-              } else if (/^\d+$/.test(largeImage)) {
-                activityIconUrl = `https://cdn.discordapp.com/app-assets/${activeGame.application_id}/${largeImage}.png`;
-              } else {
-                activityIconUrl = largeImage;
-              }
+        const largeImage = activeGame.assets && activeGame.assets.large_image;
+        if (largeImage) {
+          if (largeImage.startsWith('mp:external/')) {
+            const urlPart = largeImage.split('/').slice(2).join('/');
+            const slashIndex = urlPart.indexOf('/');
+            if (slashIndex !== -1) {
+              activityIconUrl = 'https://' + urlPart.slice(slashIndex + 1);
+            } else {
+              activityIconUrl = largeImage;
             }
-          } else if (!presenceSubtext) {
-            presenceSubtext = status === 'offline' ? 'Offline' : 'Online';
+          } else if (largeImage.startsWith('spotify:')) {
+            activityIconUrl = `https://i.scdn.co/image/${largeImage.replace('spotify:', '')}`;
+          } else if (/^\d+$/.test(largeImage)) {
+            activityIconUrl = `https://cdn.discordapp.com/app-assets/${activeGame.application_id}/${largeImage}.png`;
+          } else {
+            activityIconUrl = largeImage;
           }
-
-          setPresence({
-            username: discordUser.username,
-            status: status,
-            customStatus: presenceSubtext,
-            avatarUrl: avatarUrl,
-            activityIcon: activityIconUrl,
-            activityName: activityNameText,
-            activityState: activityStateText,
-            activityDetails: activityDetailsText,
-            isStreaming: activeGame && activeGame.type === 1
-          });
         }
-      };
+      } else if (!presenceSubtext) {
+        presenceSubtext = status === 'offline' ? 'Offline' : 'Online';
+      }
 
-      ws.onclose = () => {
-        clearInterval(heartbeatInterval);
-        console.log('Lanyard socket disconnected. Attempting reconnection...');
-        setTimeout(connectWebSocket, 5000);
-      };
-
-      ws.onerror = (err) => {
-        console.error('Lanyard socket connection failure: ', err);
-        ws.close();
-      };
+      setPresence({
+        username: discordUser.username,
+        status,
+        customStatus: presenceSubtext,
+        avatarUrl,
+        avatarDecoration: profile.avatar_decoration_data || null,
+        badges: profileJson.badges || [],
+        accentColor: profile.accent_color || null,
+        bannerColor: profile.banner_color || null,
+        bio: profile.bio || '',
+        activityIcon: activityIconUrl,
+        activityName: activityNameText,
+        activityState: activityStateText,
+        activityDetails: activityDetailsText,
+        isStreaming: activeGame && activeGame.type === 1,
+      });
+    } catch (err) {
+      console.error('Lanyard fetch failed:', err);
     }
+  }
 
-    connectWebSocket();
-    return () => {
-      if (ws) ws.close();
-      clearInterval(heartbeatInterval);
-    };
-  }, [DISCORD_USER_ID]);
+  fetchPresence();
+  const interval = setInterval(fetchPresence, 15000);
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setViewCount(Math.floor(Math.random() * 99999));
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
+  const interval = setInterval(() => {
+    setGlitching(true);
+    setViewCount(Math.floor(Math.random() * 999999));
+    setTimeout(() => setGlitching(false), 150);
+  }, 20); // glitch every 2s instead of 50ms
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     const audioElement = document.getElementById('audio');
@@ -245,18 +225,38 @@ function App() {
         
         <div className={`top-corner-traffic-badge anim-fade-in anim-d2 ${entered ? 'anim-active' : ''}`}>
           <img src={view} className='view-icon-svg' alt="views" />
-          <span>{viewCount}</span>
+          <span className={glitching ? 'glitch-active' : ''}>{viewCount}</span>
         </div>
 
         <div className={`hero-identity-section-row anim-y-scale anim-d3 ${entered ? 'anim-active' : ''}`} style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
           <div className='avatar-neon-frame-box' style={{ transform: 'translateZ(60px)', transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d' }}>
-            <img src={starImg} className='avatar-star-ring' alt="" />
+            
             <img src={mainPfp} className='user-identity-pfp' alt="Avatar" />
+            {presence.avatarDecoration && (
+              <img 
+                src={`https://cdn.discordapp.com/avatar-decoration-presets/${presence.avatarDecoration.asset}.png?size=256`} 
+                className="avatar-decoration-overlay" 
+                alt="Decoration" 
+              />
+            )}
           </div>
 
           <div className="identity-headers-column-block" style={{ transform: 'translateZ(40px)' }}>
             <div className="user-title-badge-row">
               <h1 className='lol-profile-username'>0c6a</h1>
+              {presence.badges.length > 0 && (
+                <div className="badge-row">
+                  {presence.badges.map((badge, i) => (
+                    <img 
+                      key={i} 
+                      src={`https://cdn.discordapp.com/badge-icons/${badge.icon}.png`} 
+                      alt={badge.description} 
+                      title={badge.description}
+                      className="badge-icon"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <p className="animated-typing-bio-sub">{typedText}<span className={`typewriter-cursor ${showCursor ? 'visible' : ''}`}>|</span></p>
           </div>
@@ -266,6 +266,13 @@ function App() {
           <div className="presence-status-sub-card">
             <div className="mini-avatar-status-wrapper">
               <img src={presence.avatarUrl} className="mini-status-avatar-circle" alt="Discord Avatar" />
+              {presence.avatarDecoration && (
+                <img
+                  src={`https://cdn.discordapp.com/avatar-decoration-presets/${presence.avatarDecoration.asset}.png?size=256`}
+                  className="avatar-decoration-overlay"
+                  alt="Decoration"
+                />
+              )}
             </div>
             <div className="presence-details-text-fields">
               <div className="presence-headline-row">
@@ -321,6 +328,7 @@ function App() {
           </a>
           <a href="https://github.com/0c6a" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={githubIcon} alt="GitHub" />
+            
           </a>
         </div>
 

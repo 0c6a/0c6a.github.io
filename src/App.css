@@ -565,3 +565,40 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.1),
     0 0 20px rgba(89, 54, 149, 0.2);
 }*/
+.avatar-decoration-overlay {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mini-avatar-status-wrapper {
+  position: relative;
+}
+
+.badge-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.badge-icon {
+  width: 20px;
+  height: 20px;
+}
+@keyframes number-glitch {
+  0%   { transform: translate(0); opacity: 1; }
+  10%  { transform: translate(-2px, 1px); opacity: 0.8; filter: hue-rotate(90deg); }
+  20%  { transform: translate(2px, -1px); opacity: 0.6; }
+  30%  { transform: translate(-1px, -2px); opacity: 0.9; filter: hue-rotate(0deg); }
+  40%  { transform: translate(1px, 2px); opacity: 0.7; clip-path: inset(20% 0 40% 0); }
+  50%  { transform: translate(0); opacity: 1; clip-path: none; }
+  100% { transform: translate(0); opacity: 1; }
+}
+
+.glitch-active {
+  animation: number-glitch 0.15s steps(2) forwards;
+}
