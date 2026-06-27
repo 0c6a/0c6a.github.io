@@ -5,13 +5,14 @@ import { CursorTrail } from './CursorTrail';
 
 
 import mainPfp from './images/download (2).gif';      
-import cursorAsset from './images/cur.gif';      
+import cursorAsset from './images/cur.png';      
 
 import instaIcon from './images/09066md.png';          
 import robloxIcon from './images/r.png';         
 import discordIcon from './images/ngh.png';         
 import githubIcon from './images/gitt.png';         
 import tiktokicon from './images/azeaz.png';
+import support from './images/kofi.png'
 import stop from './song/Drake - 9.mp3';
 import view from './images/viewW.svg';
 import cover from './images/Views - Drake.jpg';
@@ -58,8 +59,8 @@ function App() {
 
   const [presence, setPresence] = useState({
   username: '0c6a',
-  status: 'Streaming',
-  customStatus: 'Streaming',
+  status: 'Listening',
+  customStatus: 'Listening',
   avatarUrl: mainPfp,
   avatarDecoration: null,
   badges: [],
@@ -344,9 +345,8 @@ function App() {
           <a href="https://discord.com/users/1491137614525370589" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={discordIcon} alt="Discord" />
           </a>
-          <a href="https://github.com/0c6a" target="_blank" rel="noopener noreferrer" className="footer-node-item">
-            <img src={githubIcon} alt="GitHub" />
-            
+          <a href="https://ko-fi.com/animosity" target="_blank" rel="noopener noreferrer" className="footer-node-item">
+            <img src={support} alt="kofi" />
           </a>
         </div>
 
