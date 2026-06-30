@@ -1,9 +1,9 @@
 
 
 -----------
-## 0c6a.vercel.app
+## https://0c6a.site
 -----------
-personal website like guns.lol
+personal website like guns.lol(biolink basically)
 
 -----------
 ## stack
@@ -14,7 +14,7 @@ vite · react · npm
 ## features
 -----------
 
-- live discord editor status via lanyard
+- live discord status via lanyard
 - tilted card
 - other qol things
 
