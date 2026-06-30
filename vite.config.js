@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Proxies any data fetch calls to bypass CORS blocks
+      
       '/api-profile': {
         target: 'https://guns.lol',
         changeOrigin: true,
