@@ -355,7 +355,6 @@ function App() {
           <div id="lanyard-webring" className="footer-node-item webring-node-container">
           </div>
         </div>
-        </div>
 
       </InteractiveCard>
       </div>
