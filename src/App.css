@@ -612,18 +612,16 @@ body {
   transition: all 0.2s ease;
 }
 
-.webring-node-container:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+
+#lanyard-webring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; 
 }
 
-.webring-node-container a {
-  color: #fff;
+#lanyard-webring a {
+  color: white;
   text-decoration: none;
-  font-size: 13px;
-  font-family: inherit;
-}
-.glitch-active {
-  animation: number-glitch 0.15s steps(2) forwards;
+  font-size: 14px;
 }
