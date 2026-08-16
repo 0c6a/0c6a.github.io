@@ -31,7 +31,7 @@ function App() {
   const [glitching, setGlitching] = useState(false);
 
  
-  const bioText = 'I trust no one, not even myself';
+  const bioText = 'new website soon trust';
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
@@ -74,7 +74,7 @@ function App() {
   isStreaming: false
 });
 
-  const DISCORD_USER_ID = '1491137614525370589';
+  const DISCORD_USER_ID = '1525864258900857054';
    
 
   useEffect(() => {
