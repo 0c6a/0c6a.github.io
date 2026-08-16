@@ -352,6 +352,9 @@ function App() {
           <a href="https://ko-fi.com/animosity" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={support} alt="kofi" />
           </a>
+          <div id="lanyard-webring" className="footer-node-item webring-node-container">
+          </div>
+        </div>
         </div>
 
       </InteractiveCard>
