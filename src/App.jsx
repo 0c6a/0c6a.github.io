@@ -1,3 +1,7 @@
+// this code is horrible, yes ai was used (a lot)
+// you can still use this 
+
+
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { InteractiveCard } from './InteractiveCard';
@@ -330,7 +334,7 @@ function App() {
         </div>
 
         <div className={`lol-profile-footer-navigation-nodes anim-y-scale anim-d6 ${entered ? 'anim-active' : ''}`} style={{ transform: 'translateZ(25px)' }}>
-          <a href="https://instagram.com/m0icy.dll" target="_blank" rel="noopener noreferrer" className="footer-node-item">
+          <a href="https://instagram.com/misteryarchive" target="_blank" rel="noopener noreferrer" className="footer-node-item">
             <img src={instaIcon} alt="Instagram" />
           </a>
           <a href="https://www.roblox.com/users/9652172792/profile" target="_blank" rel="noopener noreferrer" className="footer-node-item">
