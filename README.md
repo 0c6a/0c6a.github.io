@@ -1,7 +1,7 @@
 
 
 -----------
-## https://0c6a.site
+## ai slop
 -----------
 personal website like guns.lol(biolink basically)
 
